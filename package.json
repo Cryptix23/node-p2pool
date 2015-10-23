@@ -1,0 +1,27 @@
+{
+  "name": "node-p2pool",
+  "version": "0.1.0",
+  "description": "p2pool in nodejs",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drazisil/node-p2pool.git"
+  },
+  "keywords": [
+    "p2pool",
+    "bitcoin",
+    "mining"
+  ],
+  "author": [{
+    "name": "Joseph W Becher (drazisil)",
+    "email": "jwbecher@drazisil.com",
+    "url": "http://code.drazisil.com/"
+  }],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drazisil/node-p2pool/issues"
+  }
+}
