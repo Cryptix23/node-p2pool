@@ -4,18 +4,20 @@ var nock = require('nock')
 
 describe('Bitcoin node', function () {
   before(function () {
-    nock('http://127.0.0.1:8332')
-      .post('/', '*')
-      .reply(200, {
-        _id: '123ABC',
-        _rev: '946B7D1C',
-        username: 'pgte',
-        email: 'pedro.teixeira@gmail.com'
-      })
-      .log(console.log)
   })
 
   describe('client', function (done) {
+    nock('http://localhost:8332')
+    .filteringRequestBody(function () {
+      return '*'
+    })
+    .post('/', '*')
+    .reply(
+      200,
+      {'result': {'errors': ''}, 'error': null},
+      {'connection': 'close', 'content-type': 'application/json'}
+    )
+
     var rpc = require('node-json-rpc')
 
     // Create a server object with options
@@ -24,7 +26,7 @@ describe('Bitcoin node', function () {
       // int port of rpc server, default 5080 for http or 5433 for https
       port: 8332,
       // string domain name or ip of rpc server, default '127.0.0.1'
-      host: '127.0.0.1',
+      host: 'localhost',
       // string with default path, default '/'
       path: '/',
       // boolean false to turn rpc checks off, default true
@@ -34,8 +36,8 @@ describe('Bitcoin node', function () {
     }
     var client = new rpc.Client(options)
 
-    nock.recorder.rec()
-    nock.disableNetConnect()
+    // nock.recorder.rec()
+    // nock.disableNetConnect()
 
     client.call(
       {'jsonrpc': '2.0', 'method': 'getnetworkinfo', 'params': [], 'id': 0},
@@ -44,15 +46,16 @@ describe('Bitcoin node', function () {
         if (err) {
           console.log(err)
           console.log(res)
+          assert.equal("{ result: { errors: '' }, error: null }", console.log(err))
         } else {
-          console.log(res)
-          done()
+          assert.equal("{ result: { errors: '' }, error: null }", console.log(res))
+          // done()
         }
       }
     )
 
-    var nockCalls = nock.recorder.play()
-    console.dir(nockCalls)
+    // var nockCalls = nock.recorder.play()
+    // console.dir(nockCalls)
 
     it('should return -1 when the value is not present', function () {
       assert.equal(-1, [1, 2, 3].indexOf(5))
