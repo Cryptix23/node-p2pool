@@ -7,8 +7,7 @@ describe('Bitcoin node', function () {
   })
 
   describe('client', function (done) {
-    it('it should bel able to connect', function () {
-
+    it('it should be able to connect', function () {
       nock('http://localhost:8332')
         .filteringRequestBody(function () {
           return '*'
