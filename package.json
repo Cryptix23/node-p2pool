@@ -15,11 +15,13 @@
     "bitcoin",
     "mining"
   ],
-  "author": [{
-    "name": "Joseph W Becher (drazisil)",
-    "email": "jwbecher@drazisil.com",
-    "url": "http://code.drazisil.com/"
-  }],
+  "author": [
+    {
+      "name": "Joseph W Becher (drazisil)",
+      "email": "jwbecher@drazisil.com",
+      "url": "http://code.drazisil.com/"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/drazisil/node-p2pool/issues"
@@ -33,6 +35,7 @@
     "gulp-standard": "^5.2.2",
     "mocha": "^2.3.3",
     "mocha-standard": "^1.0.0",
+    "nock": "^2.15.0",
     "should": "^7.1.0",
     "standard": "^5.3.1"
   },
@@ -42,5 +45,8 @@
       "it",
       "before"
     ]
+  },
+  "dependencies": {
+    "node-json-rpc": "0.0.1"
   }
 }
