@@ -18,7 +18,7 @@ var mocha = require('gulp-mocha')
 gulp.task('mocha', function () {
   return gulp.src('test/*', {read: false})
     // gulp-mocha needs filepaths so you can't have any plugins before it
-    .pipe(mocha({reporter: ' mocha-lcov-reporter'}))
+    .pipe(mocha({reporter: 'mocha-lcov-reporter'}))
 })
 
 var coveralls = require('gulp-coveralls')
