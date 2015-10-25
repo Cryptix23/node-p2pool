@@ -4,7 +4,8 @@
   "description": "p2pool in nodejs",
   "main": "src/index.js",
   "scripts": {
-    "test": "gulp"
+    "test": "gulp test",
+    "coveralls": "gulp coveralls"
   },
   "repository": {
     "type": "git",
@@ -15,13 +16,11 @@
     "bitcoin",
     "mining"
   ],
-  "author": [
-    {
-      "name": "Joseph W Becher (drazisil)",
-      "email": "jwbecher@drazisil.com",
-      "url": "http://code.drazisil.com/"
-    }
-  ],
+  "author": [{
+    "name": "Joseph W Becher (drazisil)",
+    "email": "jwbecher@drazisil.com",
+    "url": "http://code.drazisil.com/"
+  }],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/drazisil/node-p2pool/issues"
