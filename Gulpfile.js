@@ -14,21 +14,21 @@ gulp.task('standard', function () {
     }))
 })
 
-gulp.task('test', function (cb) {
-  gulp.src([
-    // './dataStructures/**/*.js',
-    './src/**/*.js'
+gulp.task('pre-test', function () {
+  return gulp.src(['src/**/*.js'])
+    // Covering files
+    .pipe(istanbul())
+    // Force `require` to return covered files
+    .pipe(istanbul.hookRequire())
+})
+
+gulp.task('test', ['pre-test'], function (cb) {
+  return gulp.src([
+    './test/**/*.js'
   ])
-  .pipe(istanbul({includeUntested: true}))
-  .on('finish', function () {
-    gulp.src([
-      './test/**/*.js'
-    ])
-    .pipe(mocha({ reporter: 'mocha-lcov-reporter' }))
-    // .pipe(jsc())
-    .pipe(istanbul.writeReports()) // stores reports in "coverage" directory
-    .on('end', cb)
-  })
+  .pipe(mocha({ reporter: 'spec' }))
+  // .pipe(jsc())
+  .pipe(istanbul.writeReports()) // stores reports in "coverage" directory
 })
 
 gulp.task('coveralls', function (cb) {
