@@ -1,28 +1,20 @@
 'use strict'
 
-exports.connect = function (host, port, user, pass, method, param, done_cb) {
-  var rpc = require('node-json-rpc')
+var rpc = require('node-json-rpc')
 
+exports.connect = function (host, port, user, pass, method, param, done_cb) {
   // Create a server object with options
-  // Create a server object with options
-  var options = {
-    // int port of rpc server, default 5080 for http or 5433 for https
-    port: port,
-    // string domain name or ip of rpc server, default '127.0.0.1'
+  var client = new rpc.Client({
     host: host,
-    // string with default path, default '/'
+    port: port,
     path: '/',
-    // boolean false to turn rpc checks off, default true
     strict: true,
     login: user,
     hash: pass
-  }
-  var client = new rpc.Client(options)
-
-  var jsoncall = '{\'jsonrpc\': \'2.0\', \'method\': \'' + method + '\', \'params\': [], \'id\': 0}'
+  })
 
   client.call(
-    jsoncall,
+    {'jsonrpc': '2.0', 'method': method, 'params': [], 'id': 0},
     function (err, res) {
       // Did it all work ?
       if (err) {
