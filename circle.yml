@@ -2,8 +2,8 @@ machine:
   node:
     version: v0.11.13
   environment:
-    COVERALLS_REPO_TOKEN: gPMtR9EDIPALoDbdlEbUO33w37TPDJjvj
-    CIRCLE_ARTIFACTS: ./coverage
+    COVERALLS_REPO_TOKEN: "gPMtR9EDIPALoDbdlEbUO33w37TPDJjvj"
+    CIRCLE_ARTIFACTS: "~/node-p2pool/coverage"
 
 dependencies:
   override:
