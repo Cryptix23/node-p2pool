@@ -39,4 +39,4 @@ gulp.task('watch', function () {
   gulp.watch('./tests/**', ['test'])
 })
 
-gulp.task('default', ['standard', 'test'])
+gulp.task('default', ['standard', 'test', 'coveralls'])
