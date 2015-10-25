@@ -5,6 +5,10 @@ machine:
     COVERALLS_REPO_TOKEN: "gPMtR9EDIPALoDbdlEbUO33w37TPDJjvj"
     CIRCLE_ARTIFACTS: "~/node-p2pool/coverage"
 
+general:
+  artifacts:
+    - "coverage" # relative to the user's home directory
+
 dependencies:
   override:
     - npm install
