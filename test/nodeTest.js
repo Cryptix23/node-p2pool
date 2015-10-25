@@ -1,62 +1,39 @@
 /* global describe it before */
 var assert = require('assert')
 var nock = require('nock')
+var nodep2pool = require('../src/index')
 
 describe('Bitcoin node', function () {
   before(function () {
   })
 
-  describe('client', function (done) {
-    it('it should be able to connect', function () {
+  describe('client', function () {
+    it('it should be able to connect', function (done) {
       nock('http://localhost:8332')
         .filteringRequestBody(function () {
           return '*'
         })
         .post('/', '*')
         .reply(
-          200,
-          {'result': {'errors': ''}, 'error': null},
-          {'connection': 'close', 'content-type': 'application/json'}
+          200, {
+            result: {
+              errors: ''
+            },
+            error: {
+              code: '-32601',
+              message: 'Method not found'
+            }
+          }
         )
 
-      var rpc = require('node-json-rpc')
-
-      // Create a server object with options
-      // Create a server object with options
-      var options = {
-        // int port of rpc server, default 5080 for http or 5433 for https
-        port: 8332,
-        // string domain name or ip of rpc server, default '127.0.0.1'
-        host: 'localhost',
-        // string with default path, default '/'
-        path: '/',
-        // boolean false to turn rpc checks off, default true
-        strict: true,
-        login: 'bitcoinrpctest',
-        hash: 'moo'
-      }
-      var client = new rpc.Client(options)
-
       // nock.recorder.rec()
-      // nock.disableNetConnect()
 
-      client.call(
-        {'jsonrpc': '2.0', 'method': 'getnetworkinfo', 'params': [], 'id': 0},
-        function (err, res) {
-          // Did it all work ?
-          if (err) {
-            // console.log(err)
-            // console.log(res)
-            assert.equal("{ result: { errors: '' }, error: null }", console.log(err))
-          } else {
-            assert.equal("{ result: { errors: '' }, error: null }", console.log(res))
-            // done()
-          }
-        }
-      )
-
-      // var nockCalls = nock.recorder.play()
       // console.dir(nockCalls)
+      nodep2pool.connect('localhost', 8332, 'bitcoinrpctest', 'moo', 'getnetworkstatus', null, function (res) {
+        assert.equal('Method not found', res.error.message)
+        done()
+      })
     })
+      // nock.recorder.play()
   })
 })

@@ -5,6 +5,7 @@ var standard = require('gulp-standard')
 var mocha = require('gulp-mocha')
 var istanbul = require('gulp-istanbul')
 var coveralls = require('gulp-coveralls')
+var jsc = require('gulp-jscoverage')
 
 gulp.task('standard', function () {
   return gulp.src(['./app.js'])
@@ -16,15 +17,18 @@ gulp.task('standard', function () {
 
 gulp.task('test', function (cb) {
   gulp.src([
-    './dataStructures/**/*.js',
+    // './dataStructures/**/*.js',
+    './src/**/*.js',
+    './test/**/*.js',
     './index.js'
   ])
-  .pipe(istanbul())
+  .pipe(istanbul({includeUntested: true}))
   .on('finish', function () {
     gulp.src([
       './test/**/*.js'
     ])
-    .pipe(mocha({ reporter: 'spec' }))
+    .pipe(mocha({ reporter: 'mocha-lcov-reporter' }))
+    .pipe(jsc())
     .pipe(istanbul.writeReports()) // stores reports in "coverage" directory
     .on('end', cb)
   })
