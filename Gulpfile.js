@@ -22,7 +22,7 @@ gulp.task('test', function (cb) {
   .pipe(istanbul())
   .on('finish', function () {
     gulp.src([
-      './tests/**/*.js'
+      './test/**/*.js'
     ])
     .pipe(mocha({ reporter: 'spec' }))
     .pipe(istanbul.writeReports()) // stores reports in "coverage" directory
@@ -36,7 +36,7 @@ gulp.task('coveralls', function (cb) {
 })
 
 gulp.task('watch', function () {
-  gulp.watch('./tests/**', ['test'])
+  gulp.watch('./test/**', ['test'])
 })
 
 gulp.task('default', ['standard', 'test', 'coveralls'])
