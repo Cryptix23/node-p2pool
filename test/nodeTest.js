@@ -45,8 +45,8 @@ describe('Bitcoin node', function () {
         function (err, res) {
           // Did it all work ?
           if (err) {
-            console.log(err)
-            console.log(res)
+            // console.log(err)
+            // console.log(res)
             assert.equal("{ result: { errors: '' }, error: null }", console.log(err))
           } else {
             assert.equal("{ result: { errors: '' }, error: null }", console.log(res))
@@ -57,11 +57,6 @@ describe('Bitcoin node', function () {
 
       // var nockCalls = nock.recorder.play()
       // console.dir(nockCalls)
-    })
-
-    it('should return -1 when the value is not present', function () {
-      assert.equal(-1, [1, 2, 3].indexOf(5))
-      assert.equal(-1, [1, 2, 3].indexOf(0))
     })
   })
 })

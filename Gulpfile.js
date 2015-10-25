@@ -1,9 +1,10 @@
 'use strict'
 
 var gulp = require('gulp')
-// Start of the actual gulp
-
 var standard = require('gulp-standard')
+var mocha = require('gulp-mocha')
+var istanbul = require('gulp-istanbul')
+var coveralls = require('gulp-coveralls')
 
 gulp.task('standard', function () {
   return gulp.src(['./app.js'])
@@ -13,43 +14,29 @@ gulp.task('standard', function () {
     }))
 })
 
-var mocha = require('gulp-mocha')
-
-gulp.task('mocha', function () {
-  return gulp.src('test/*', {read: false})
-    // gulp-mocha needs filepaths so you can't have any plugins before it
-    .pipe(mocha({reporter: 'mocha-lcov-reporter'}))
+gulp.task('test', function (cb) {
+  gulp.src([
+    './dataStructures/**/*.js',
+    './index.js'
+  ])
+  .pipe(istanbul())
+  .on('finish', function () {
+    gulp.src([
+      './tests/**/*.js'
+    ])
+    .pipe(mocha({ reporter: 'spec' }))
+    .pipe(istanbul.writeReports()) // stores reports in "coverage" directory
+    .on('end', cb)
+  })
 })
 
-var istanbul = require('gulp-istanbul');
-
-gulp.task('pre-test', function () {
-  return gulp.src(['lib/**/*.js'])
-    // Covering files
-    .pipe(istanbul())
-    // Force `require` to return covered files
-    .pipe(istanbul.hookRequire())
-    // Write the covered files to a temporary directory
-    .pipe(gulp.dest('test/coverage/'));
+gulp.task('coveralls', function (cb) {
+  return gulp.src('./coverage/lcov.info')
+  .pipe(coveralls())
 })
 
-gulp.task('test', ['pre-test'], function () {
-  return gulp.src(['test/*.js'])
-    .pipe(mocha())
-    // Creating the reports after tests ran
-    .pipe(istanbul.writeReports())
-    // Enforce a coverage of at least 90%
-    .pipe(istanbul.enforceThresholds({ thresholds: { global: 90 } }));
-});
-
-var coveralls = require('gulp-coveralls')
-
-// coveralls task
-gulp.task('coveralls', function () {
-  gulp.src('test/coverage/**/lcov.info')
-    .pipe(coveralls())
+gulp.task('watch', function () {
+  gulp.watch('./tests/**', ['test'])
 })
 
-gulp.task('run', ['standard', 'test', 'coveralls'])
-
-gulp.task('default', ['run'])
+gulp.task('default', ['standard', 'test'])
