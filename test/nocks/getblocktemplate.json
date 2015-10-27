@@ -1,0 +1,27 @@
+{
+  "result": {
+    "capabilities": ["proposal"],
+    "version": 3,
+    "previousblockhash": "000000000000000001e44049bad06fed8b83c86f1f460e879194085d81f2ff12",
+    "transactions": [
+      [Object],
+      [Object]
+    ],
+    "coinbaseaux": {
+      "flags": ""
+    },
+    "coinbasevalue": 2508976362,
+    "longpollid": "000000000000000001e44049bad06fed8b83c86f1f460e879194085d81f2ff121024877",
+    "target": "0000000000000000120f14000000000000000000000000000000000000000000",
+    "mintime": 1445928631,
+    "mutable": ["time", "transactions", "prevblock"],
+    "noncerange": "00000000ffffffff",
+    "sigoplimit": 20000,
+    "sizelimit": 1000000,
+    "curtime": 1445931377,
+    "bits": "18120f14",
+    "height": 380765
+  },
+  "error": null,
+  "id": "1"
+}
