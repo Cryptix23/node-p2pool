@@ -38,6 +38,64 @@ function nock_bitcoind (method) {
   }
 }
 
+/**
+* https://en.bitcoin.it/wiki/Stratum_mining_protocol
+*/
+describe('Stratum server', function () {
+  describe('can connect', function () {
+    it('should return true')
+  })
+
+  describe('mining.authorize', function () {
+    it('should return true')
+  })
+
+  describe('mining.get_transactions', function () {
+    it('should return array of transactions')
+  })
+
+  describe('mining.submit', function () {
+    it('should return true')
+  })
+
+// [[["mining.set_difficulty", "subscription id 1"], ["mining.notify", "subscription id 2"]], "extranonce1", extranonce2_size]
+  describe('mining.subscribe', function () {
+    it('should return that')
+  })
+
+  describe('mining.suggest_difficulty', function () {
+    it('should return true')
+  })
+
+  describe('mining.suggest_target', function () {
+    it('should return true')
+  })
+})
+
+describe('Stratum client', function () {
+  describe('can connect', function () {
+    it('should return true')
+  })
+
+  describe('client.get_version', function () {
+    it('should return version string')
+  })
+
+  describe('client.reconnect', function () {
+    it('should return array of transactions')
+  })
+
+  describe('mining.notify', function () {
+    it('should return true')
+  })
+  describe('mining.set_difficulty', function () {
+    it('should return true')
+  })
+  describe('mining.set_extranonce', function () {
+    it('should return true')
+  })
+})
+
 describe('Bitcoin node', function () {
   describe('bitcoind', function () {
     nock_bitcoind('getblocktemplate')
