@@ -33,7 +33,7 @@ function nock_bitcoind (method) {
   if (method === 'timeout') {
     nock('http://localhost:8332')
     .post('/', '*')
-    .socketDelay(2000) // 2 seconds
+    .delayConnection(2000) // 2 seconds
     .reply(200, '<html></html>')
   }
 }
@@ -98,8 +98,16 @@ describe('Stratum client', function () {
 
 describe('Bitcoin node', function () {
   describe('bitcoind', function () {
-    nock_bitcoind('getblocktemplate')
+    it('connection - timeout', function (done) {
+      nock_bitcoind('timeout')
+      nodep2pool.getBlockTemplate(function (res) {
+        assert.equal(3, res.result.version)
+        done()
+      })
+    })
+
     it('getblocktemplate', function (done) {
+      nock_bitcoind('getblocktemplate')
       nodep2pool.getBlockTemplate(function (res) {
         assert.equal(3, res.result.version)
         done()
