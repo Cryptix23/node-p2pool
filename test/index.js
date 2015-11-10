@@ -103,7 +103,7 @@ describe('Bitcoin node', function () {
       nock_bitcoind('timeout')
       nodep2pool.getBlockTemplate(function (err, res) {
         if (err) {
-          assert.equal(3, err)
+          assert.equal('Timed out', err)
           done()
         } else {
           assert.equal(3, res.result.version)
