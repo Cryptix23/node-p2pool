@@ -104,8 +104,8 @@ describe('Bitcoin node', function () {
     it('getblocktemplate - connect', function (done) {
       nock_bitcoind('getblocktemplate')
       nodep2pool.getBlockTemplate(function (err, res) {
-        if (err !== null) {
-          console.log(err)
+        if (err) {
+          assert.fail('Should have passed')
           done()
         } else {
           assert.equal(3, res.result.version)
@@ -117,11 +117,11 @@ describe('Bitcoin node', function () {
     it('getblocktemplate - timeout', function (done) {
       nock_bitcoind('timeout')
       nodep2pool.getBlockTemplate(function (err, res) {
-        if (err !== null) {
-          console.log(err)
+        if (err) {
+          assert.equal('Timed out', err)
           done()
         } else {
-          assert.equal(3, res.result.version)
+          assert.fail('Should not have failed')
           done()
         }
       })
