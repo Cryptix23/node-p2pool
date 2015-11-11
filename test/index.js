@@ -36,7 +36,7 @@ function nock_bitcoind (method) {
       return '*'
     })
     .post('/', '*')
-    .delayConnection(2000) // 2 seconds
+    .socketDelay(2000) // 2 seconds
     .reply(200, '<html></html>')
   }
 }
