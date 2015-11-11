@@ -4,8 +4,7 @@
   "description": "p2pool in nodejs",
   "main": "src/index.js",
   "scripts": {
-    "test": "gulp test",
-    "coveralls": "gulp coveralls"
+    "test": "gulp dev"
   },
   "repository": {
     "type": "git",

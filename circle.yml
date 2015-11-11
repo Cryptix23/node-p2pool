@@ -12,8 +12,3 @@ general:
 dependencies:
   override:
     - npm install
-
-test:
-  override:
-    - npm run test
-    - npm run coveralls
