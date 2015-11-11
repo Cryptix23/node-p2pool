@@ -41,3 +41,5 @@ gulp.task('watch', function () {
 })
 
 gulp.task('default', ['standard', 'test', 'coveralls'])
+
+gulp.task('dev', ['standard', 'test', 'coveralls'])
