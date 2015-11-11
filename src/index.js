@@ -12,6 +12,6 @@ exports.getBlockTemplate = function getBlockTemplate (cb) {
     if (err) {
       cb(err)
     }
-    cb(res)
+    cb(null, res)
   })
 }

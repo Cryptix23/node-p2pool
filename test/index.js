@@ -32,8 +32,11 @@ function nock_bitcoind (method) {
   }
   if (method === 'timeout') {
     nock('http://localhost:8332')
+    .filteringRequestBody(function (body) {
+      return '*'
+    })
     .post('/', '*')
-    .socketDelay(2000) // 2 seconds
+    .delayConnection(2000) // 2 seconds
     .reply(200, '<html></html>')
   }
 }
@@ -98,11 +101,29 @@ describe('Stratum client', function () {
 
 describe('Bitcoin node', function () {
   describe('bitcoind', function () {
-    nock_bitcoind('getblocktemplate')
-    it('getblocktemplate', function (done) {
-      nodep2pool.getBlockTemplate(function (res) {
-        assert.equal(3, res.result.version)
-        done()
+    it('getblocktemplate - connect', function (done) {
+      nock_bitcoind('getblocktemplate')
+      nodep2pool.getBlockTemplate(function (err, res) {
+        if (err !== null) {
+          console.log(err)
+          done()
+        } else {
+          assert.equal(3, res.result.version)
+          done()
+        }
+      })
+    })
+
+    it('getblocktemplate - timeout', function (done) {
+      nock_bitcoind('timeout')
+      nodep2pool.getBlockTemplate(function (err, res) {
+        if (err !== null) {
+          console.log(err)
+          done()
+        } else {
+          assert.equal(3, res.result.version)
+          done()
+        }
       })
     })
   })
