@@ -12,3 +12,6 @@ general:
 dependencies:
   override:
     - npm install
+test:
+  override:
+    - npm test && ./blamemaster.sh
