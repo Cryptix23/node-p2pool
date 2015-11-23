@@ -49,6 +49,23 @@ describe('Stratum server', function () {
     it('should return true')
   })
 
+  // [[["mining.set_difficulty", "subscription id 1"], ["mining.notify", "subscription id 2"]], "extranonce1", extranonce2_size]
+  describe('mining.subscribe', function () {
+    it('should return mining.set_difficulty', function (done) {
+      nock_bitcoind('getblocktemplate')
+      var reqMiningSubscribe = '{"id": 0, "method": "mining.subscribe", "params": ["cgminer/4.7.0"]}'
+      nodep2pool.stratum.miningSubscribe(reqMiningSubscribe, function (err, res) {
+        if (err) {
+          assert.fail('Should have passed')
+          done()
+        } else {
+          assert.equal(3, res.result.version)
+          done()
+        }
+      })
+    })
+  })
+
   describe('mining.authorize', function () {
     it('should return true')
   })
@@ -59,11 +76,6 @@ describe('Stratum server', function () {
 
   describe('mining.submit', function () {
     it('should return true')
-  })
-
-// [[["mining.set_difficulty", "subscription id 1"], ["mining.notify", "subscription id 2"]], "extranonce1", extranonce2_size]
-  describe('mining.subscribe', function () {
-    it('should return that')
   })
 
   describe('mining.suggest_difficulty', function () {
