@@ -52,14 +52,26 @@ describe('Stratum server', function () {
   // [[["mining.set_difficulty", "subscription id 1"], ["mining.notify", "subscription id 2"]], "extranonce1", extranonce2_size]
   describe('mining.subscribe', function () {
     it('should return mining.set_difficulty', function (done) {
-      nock_bitcoind('getblocktemplate')
       var reqMiningSubscribe = '{"id": 0, "method": "mining.subscribe", "params": ["cgminer/4.7.0"]}'
       nodep2pool.stratum.miningSubscribe(reqMiningSubscribe, function (err, res) {
         if (err) {
-          assert.fail('Should have passed')
+          assert.equal('Should have passed', err)
           done()
         } else {
-          assert.equal(3, res.result.version)
+          assert.equal('cgminer/4.7.0', res.params[0])
+          done()
+        }
+      })
+    })
+
+    it('should fail', function (done) {
+      var reqMiningSubscribe = '{"id": 0, "method": "mining.subscribe", "paramsx"~~z: ["cgminer/4.7.0"]}'
+      nodep2pool.stratum.miningSubscribe(reqMiningSubscribe, function (err, res) {
+        if (err) {
+          assert.equal('Unexpected token ~', err)
+          done()
+        } else {
+          assert.equal('Should have failed', res)
           done()
         }
       })
@@ -133,7 +145,7 @@ describe('Bitcoin node', function () {
           assert.equal('Timed out', err)
           done()
         } else {
-          assert.fail('Should not have failed')
+          assert.equal('Should have failed', res)
           done()
         }
       })
